@@ -11,7 +11,7 @@ import router from './router';
 import store from './vuex/store';
 // 引入icon
 import './assets/icon/iconfont.css'
-// 
+//
 
 // 引入echarts
 import echarts from 'echarts'
@@ -19,6 +19,7 @@ Vue.prototype.$echarts = echarts
 
 import axios from 'axios';
 Vue.prototype.$axios = axios;
+axios.defaults.baseURL = 'http://134.175.220.159:8005/'
 
 Vue.config.productionTip = false;
 
@@ -49,7 +50,7 @@ router.beforeEach((to, from, next) => {
                     next();
                 } else {
                     /**
-                     * 防刷新，如果登录，修改路由跳转到登录页面，修改路由为登录后的首页 
+                     * 防刷新，如果登录，修改路由跳转到登录页面，修改路由为登录后的首页
                      */
                     next({
                         path: '/goods/Goods'

@@ -6,23 +6,10 @@ const loginreq = (method, url, params) => {
         method: method,
         url: url,
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
+          contentType: 'application/json; charset=UTF-8',
         },
         data: params,
-        traditional: true,
-        transformRequest: [
-            function(data) {
-                let ret = ''
-                for (let it in data) {
-                    ret +=
-                        encodeURIComponent(it) +
-                        '=' +
-                        encodeURIComponent(data[it]) +
-                        '&'
-                }
-                return ret
-            }
-        ]
+        traditional: true
     }).then(res => res.data);
 };
 // 通用公用方法
@@ -31,24 +18,11 @@ const req = (method, url, params) => {
         method: method,
         url: url,
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Type': 'application/json; charset=UTF-8',
             token: localStorage.getItem('logintoken')
         },
         data: params,
-        traditional: true,
-        transformRequest: [
-            function(data) {
-                let ret = ''
-                for (let it in data) {
-                    ret +=
-                        encodeURIComponent(it) +
-                        '=' +
-                        encodeURIComponent(data[it]) +
-                        '&'
-                }
-                return ret
-            }
-        ]
+        traditional: true
     }).then(res => res.data);
 };
 

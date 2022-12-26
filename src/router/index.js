@@ -53,7 +53,7 @@ import statistics from '@/views/charts/statistics';
 // 启用路由
 Vue.use(Router);
 
-// 导出路由 
+// 导出路由
 export default new Router({
     routes: [{
         path: '/',
