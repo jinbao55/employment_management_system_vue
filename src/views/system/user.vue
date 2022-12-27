@@ -11,17 +11,17 @@
     <!-- 搜索筛选 -->
     <el-form :inline="true" :model="formInline" class="user-search">
       <el-form-item label="搜索：">
-        <el-select size="small" v-model="formInline.isLock" placeholder="请选择">
+        <el-select size="small" v-model="formInline.state" placeholder="请选择">
           <el-option label="全部" value=""></el-option>
-          <el-option label="正常" value="N"></el-option>
-          <el-option label="已锁定" value="Y"></el-option>
+          <el-option label="正常" value="1"></el-option>
+          <el-option label="已锁定" value="2"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="">
-        <el-input size="small" v-model="formInline.userName" placeholder="输入用户名"></el-input>
+        <el-input size="small" v-model="formInline.name" placeholder="输入用户名"></el-input>
       </el-form-item>
       <el-form-item label="">
-        <el-input size="small" v-model="formInline.userMobile" placeholder="输入手机号"></el-input>
+        <el-input size="small" v-model="formInline.tel" placeholder="输入手机号"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button size="small" type="primary" icon="el-icon-search" @click="search">搜索</el-button>
@@ -33,26 +33,30 @@
     <el-table size="small" @selection-change="selectChange" :data="userData" highlight-current-row v-loading="loading" border element-loading-text="拼命加载中" style="width: 100%;">
       <el-table-column align="center" type="selection" width="50">
       </el-table-column>
-      <el-table-column align="center" sortable prop="deptName" label="公司" width="120">
+      <el-table-column align="center" sortable prop="loginName" label="登录名" width="120">
       </el-table-column>
-      <el-table-column align="center" sortable prop="userName" label="用户名" width="120">
+      <el-table-column align="center" sortable prop="name" label="姓名" width="120">
       </el-table-column>
-      <el-table-column align="center" sortable prop="userRealName" label="姓名" width="120">
+      <el-table-column align="center" sortable prop="tel" label="手机号" width="120">
       </el-table-column>
-      <el-table-column align="center" sortable prop="userMobile" label="手机号" width="120">
+
+      <el-table-column align="center" sortable prop="college" label="学院" min-width="50">
       </el-table-column>
-      <el-table-column align="center" sortable prop="userSex" label="性别" min-width="50">
+      <el-table-column align="center" sortable prop="classNo" label="班级" min-width="50">
       </el-table-column>
-      <el-table-column align="center" sortable prop="userEmail" label="邮件" min-width="120">
+      <el-table-column align="center" sortable prop="post" label="职务" min-width="50">
       </el-table-column>
-      <el-table-column align="center" sortable prop="editTime" label="修改时间" min-width="120">
+      <el-table-column align="center" sortable prop="type" label="用户类型" min-width="50">
+      </el-table-column>
+<!--      <el-table-column align="center" sortable prop="crtTime" label="创建时间" min-width="120">-->
+<!--        <template slot-scope="scope">-->
+<!--          <div>{{scope.row.editTime|timestampToTime}}</div>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
+
+      <el-table-column align="center" sortable prop="state" label="状态" min-width="50">
         <template slot-scope="scope">
-          <div>{{scope.row.editTime|timestampToTime}}</div>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" sortable prop="isLock" label="状态" min-width="50">
-        <template slot-scope="scope">
-          <el-switch v-model="scope.row.isLock=='N'?nshow:fshow" active-color="#13ce66" inactive-color="#ff4949" @change="editType(scope.$index, scope.row)">
+          <el-switch v-model="scope.row.state=='1'?nshow:fshow" active-color="#13ce66" inactive-color="#ff4949" @change="editType(scope.$index, scope.row)">
           </el-switch>
         </template>
       </el-table-column>
@@ -212,11 +216,11 @@ export default {
       // 请求数据参数
       formInline: {
         page: 1,
-        limit: 10,
+        limit: 9,
         deptId: '',
-        userName: '',
-        userMobile: '',
-        isLock: ''
+        name: '',
+        tel: '',
+        state: ''
       },
       //用户数据
       userData: [],
@@ -234,7 +238,7 @@ export default {
       pageparm: {
         currentPage: 1,
         pageSize: 10,
-        total: 10
+        total: 100
       }
     }
   },
@@ -263,9 +267,6 @@ export default {
     getdata(parameter) {
       this.loading = true
 
-      /***
-       * 调用接口，注释上面模拟数据 取消下面注释
-       */
       // 获取用户列表
       userList(parameter).then(res => {
         this.loading = false
@@ -279,7 +280,7 @@ export default {
           // 分页赋值
           this.pageparm.currentPage = this.formInline.page
           this.pageparm.pageSize = this.formInline.limit
-          this.pageparm.total = res.count
+          this.pageparm.total = res.code
         }
       })
     },

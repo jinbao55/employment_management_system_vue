@@ -12,7 +12,7 @@ export const loginout = () => { return axios.delete("/api/login?&token=" + local
  * 用户管理
  **/
 // 用户管理-获取用户列表
-export const userList = (params) => { return req("post", "/recruitmentInformation/getPageList", null) };
+export const userList = (params) => { return req("post", "/user/getPageList", params) };
 // 用户管理-保存（添加编辑）
 export const userSave = (params) => { return req("post", "/api/User/save", params) };
 // 用户管理-删除用户

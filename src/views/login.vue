@@ -93,6 +93,8 @@ export default {
                   this.$message({
                     message: res.data
                   })
+                  this.logining = false
+                  return false
                 }
               }
             )
