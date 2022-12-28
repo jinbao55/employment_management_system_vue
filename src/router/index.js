@@ -50,6 +50,24 @@ import druidLogin from '@/views/druid/login';
 // 图表界面
 import statistics from '@/views/charts/statistics';
 
+
+
+
+//*************************************以下为自己添加的*******************************************
+
+import postInformation from  '@/views/post/Information';
+import postRecruit from  '@/views/post/Recruit';
+
+
+
+
+
+
+
+
+
+
+
 // 启用路由
 Vue.use(Router);
 
@@ -174,6 +192,34 @@ export default new Router({
             meta: {
                 requireAuth: true
             }
-        }]
+        },
+
+
+          //*********************以下为自己添加的************************
+
+          {
+            path: '/post/Information',
+            name: '企业信息',
+            component: postInformation,
+            meta: {
+              requireAuth: true
+            }
+          },
+          {
+            path: '/post/Recruit',
+            name: '企业招聘',
+            component: postRecruit,
+            meta: {
+              requireAuth: true
+            }
+          }
+
+
+
+
+
+
+
+        ]
     }]
 })

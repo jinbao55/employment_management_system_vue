@@ -61,13 +61,13 @@ export default {
   },
   beforeUpdate() {},
   // 挂载前状态(里面是操作)
-  beforeMount() {
-    // 弹出登录成功
-    this.$message({
-      message: '登录成功',
-      type: 'success'
-    })
-  }
+  // beforeMount() {
+  //   // 弹出登录成功
+  //   this.$message({
+  //     message: '登录成功',
+  //     type: 'success'
+  //   })
+  // }
 }
 </script>
 <style >
@@ -80,13 +80,13 @@ export default {
 .aside {
   width: 64px !important;
   height: 100%;
-  background-color: #334157;
+  background-color: #00152a;
   margin: 0px;
 }
 .asideshow {
   width: 240px !important;
   height: 100%;
-  background-color: #334157;
+  background-color: #00152a;
   margin: 0px;
 }
 .index-header,

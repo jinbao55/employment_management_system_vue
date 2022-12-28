@@ -2,26 +2,30 @@
 * 左边菜单
 */
 <template>
-  <el-menu default-active="2" :collapse="collapsed" collapse-transition router :default-active="$route.path" unique-opened class="el-menu-vertical-demo" background-color="#334157" text-color="#fff" active-text-color="#ffd04b">
-    <div class="logobox">
-      <img class="logoimg" src="../assets/img/logo.png" alt="">
+  <el-menu default-active="2" :collapse="collapsed" collapse-transition router :default-active="$route.path"
+           unique-opened class="el-menu-vertical-demo" background-color="#00152a" text-color="#fff"
+           active-text-color="#ffd04b">
+    <div class="logobox" style="height: 60px; line-height: 60px; text-align: center">
+      <img class="logoimg" src="../assets/img/liang.png" alt="">
+      <b style="color: white; font-size: 18px">访企拓岗和就业系统</b>
     </div>
     <el-submenu v-for="menu in allmenu" :key="menu.menuid" :index="menu.menuname">
       <template slot="title">
         <i class="iconfont" :class="menu.icon"></i>
-        <span>{{menu.menuname}}</span>
+        <span>{{ menu.menuname }}</span>
       </template>
       <el-menu-item-group>
         <el-menu-item v-for="chmenu in menu.menus" :index="'/'+chmenu.url" :key="chmenu.menuid">
           <i class="iconfont" :class="chmenu.icon"></i>
-          <span>{{chmenu.menuname}}</span>
+          <span>{{ chmenu.menuname }}</span>
         </el-menu-item>
       </el-menu-item-group>
     </el-submenu>
   </el-menu>
 </template>
 <script>
-import { menu } from '../api/userMG'
+import {menu} from '../api/userMG'
+
 export default {
   name: 'leftnav',
   data() {
@@ -86,19 +90,27 @@ export default {
           url: null,
           menus: [
             {
-              menuid: 129,
+              menuid: 175,
               icon: 'icon-provider-manage',
-              menuname: '支付配置信息',
+              menuname: '合作企业',
               hasThird: 'N',
-              url: 'machine/MachineConfig',
+              url: 'post/Information',
               menus: null
             },
             {
               menuid: 175,
               icon: 'icon-provider-manage',
-              menuname: '支付配置',
+              menuname: '企业招聘',
               hasThird: 'N',
-              url: 'pay/Config',
+              url: 'post/Recruit',
+              menus: null
+            },
+            {
+              menuid: 175,
+              icon: 'icon-provider-manage',
+              menuname: '校园招聘会',
+              hasThird: 'N',
+              url: 'machine/MachineConfig',
               menus: null
             }
           ]
@@ -174,7 +186,7 @@ export default {
       ],
       msg: 'success'
     }
-          this.allmenu = res.data
+    this.allmenu = res.data
 
     // menu(localStorage.getItem('logintoken'))
     //   .then(res => {
@@ -201,19 +213,24 @@ export default {
   width: 240px;
   min-height: 400px;
 }
+
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   border: none;
   text-align: left;
 }
+
 .el-menu-item-group__title {
   padding: 0px;
 }
+
 .el-menu-bg {
   background-color: #1f2d3d !important;
 }
+
 .el-menu {
   border: none;
 }
+
 .logobox {
   height: 40px;
   line-height: 40px;
@@ -222,6 +239,7 @@ export default {
   text-align: center;
   padding: 20px 0px;
 }
+
 .logoimg {
   height: 40px;
 }

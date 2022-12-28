@@ -310,7 +310,7 @@ export default {
   line-height: 60px;
   background-color: #f0f2f5;
   text-align: center;
-  color: #334157;
+  color: #00152a;
   margin-top: 20px;
   margin-bottom: 20px;
   font-size: 24px;
@@ -327,5 +327,4 @@ export default {
   width: 100%;
 }
 </style>
- 
- 
+
