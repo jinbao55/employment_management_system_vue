@@ -67,7 +67,7 @@ export default {
             {
               menuid: 34,
               icon: 'icon-order-manage',
-              menuname: '交易订单',
+              menuname: '就业登记',
               hasThird: 'N',
               url: 'pay/Order',
               menus: null
