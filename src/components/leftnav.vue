@@ -110,7 +110,7 @@ export default {
               icon: 'icon-provider-manage',
               menuname: '校园招聘会',
               hasThird: 'N',
-              url: 'machine/MachineConfig',
+              url: 'post/CampusRecruitment',
               menus: null
             }
           ]

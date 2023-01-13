@@ -20,3 +20,14 @@ export const RecruitGetPageList = (params) => { return req("post", "/recruit/get
 export const RecruiteditSave = (params) => { return req("post", "/recruit/editSave", params) };
 //企业招聘息删除
 export const Recruitdelete = (params) => { return req("post", "/recruit/delete", params) };
+
+
+/**
+ * 访企拓岗位--校园招聘
+ **/
+//校园招聘列表查询
+export const CampusRecruitmentGetPageList = (params) => { return req("post", "/campusRecruitment/getPageList", params) };
+//校园招聘息修改和添加
+export const CampusRecruitmentEditSave = (params) => { return req("post", "/campusRecruitment/editSave", params) };
+//校园招聘息删除
+export const CampusRecruitmentdelete = (params) => { return req("post", "/campusRecruitment/delete", params) };
