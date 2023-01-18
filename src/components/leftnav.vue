@@ -69,7 +69,7 @@ export default {
               icon: 'icon-order-manage',
               menuname: '就业登记',
               hasThird: 'N',
-              url: 'pay/Order',
+              url: 'post/Register',
               menus: null
             },
             {

@@ -58,6 +58,7 @@ import statistics from '@/views/charts/statistics';
 import postInformation from  '@/views/post/Information';
 import postRecruit from  '@/views/post/Recruit';
 import postCampusRecruitment from  '@/views/post/CampusRecruitment';
+import Register from  '@/views/post/Register';
 
 
 
@@ -218,6 +219,14 @@ export default new Router({
             path: '/post/CampusRecruitment',
             name: '校园招聘',
             component: postCampusRecruitment,
+            meta: {
+              requireAuth: true
+            }
+          },
+          {
+            path: '/post/Register',
+            name: '就业登记',
+            component: Register,
             meta: {
               requireAuth: true
             }

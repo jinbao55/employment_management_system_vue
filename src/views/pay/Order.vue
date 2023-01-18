@@ -11,23 +11,23 @@
     <!-- 搜索筛选 -->
     <el-form :inline="true" :model="formInline" class="user-search">
       <el-form-item label="搜索：">
-        <el-input size="small" v-model="formInline.machineNo" placeholder="输入终端编号"></el-input>
+        <el-select size="small" v-model="formInline.orderStatus" placeholder="请选择">
+          <el-option v-for="type in payway" :label="type.key" :value="type.value" :key="type.value"></el-option>
+        </el-select>
       </el-form-item>
       <el-form-item>
-        <el-input size="small" v-model="formInline.orderNo" placeholder="输入订单号"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-input size="small" v-model="formInline.transId" placeholder="输入交易单号"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-select size="small" v-model="formInline.payType" placeholder="请选择">
+        <el-select size="small" v-model="formInline.payType" placeholder="请选择公司类型">
           <el-option v-for="type in payType" :label="type.key" :value="type.value" :key="type.value"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-select size="small" v-model="formInline.orderStatus" placeholder="请选择">
-          <el-option v-for="type in payway" :label="type.key" :value="type.value" :key="type.value"></el-option>
-        </el-select>
+        <el-input size="small" v-model="formInline.orderNo" placeholder="输入专业"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-input size="small" v-model="formInline.transId" placeholder="输入工作城市"></el-input>
+      </el-form-item>
+      <el-form-item>
+
       </el-form-item>
       <el-form-item>
         <el-button size="small" type="primary" icon="el-icon-search" @click="search">搜索</el-button>
@@ -37,25 +37,23 @@
     <el-table size="small" :data="listData" highlight-current-row v-loading="loading" border element-loading-text="拼命加载中" style="width: 100%;">
       <el-table-column align="center" type="index" width="60">
       </el-table-column>
-      <el-table-column sortable prop="machineNo" label="终端编号" width="120" show-overflow-tooltip>
+      <el-table-column sortable prop="machineNo" label="姓名" width="120" show-overflow-tooltip>
       </el-table-column>
-      <el-table-column sortable prop="orderNo" label="订单号" width="120" show-overflow-tooltip>
+      <el-table-column sortable prop="orderNo" label="学院" width="120" show-overflow-tooltip>
       </el-table-column>
-      <el-table-column sortable prop="transId" label="交易单号" width="120" show-overflow-tooltip>
+      <el-table-column sortable prop="transId" label="专业" width="120" show-overflow-tooltip>
       </el-table-column>
-      <el-table-column sortable prop="payType" label="支付方式" width="140" show-overflow-tooltip>
+      <el-table-column sortable prop="transType" label="毕业时间" width="120" show-overflow-tooltip>
       </el-table-column>
-      <el-table-column sortable prop="transType" label="交易类型" width="120" show-overflow-tooltip>
+      <el-table-column sortable prop="payAmount" label="就业公司" width="180" show-overflow-tooltip>
       </el-table-column>
-      <el-table-column sortable prop="goodsPrice" label="商品价格" width="120" show-overflow-tooltip>
+      <el-table-column sortable prop="goodsName" label="就业岗位" width="140" show-overflow-tooltip>
       </el-table-column>
-      <el-table-column sortable prop="payAmount" label="支付金额" width="180" show-overflow-tooltip>
+      <el-table-column sortable prop="orderStatus" label="公司类型" width="120" show-overflow-tooltip>
       </el-table-column>
-      <el-table-column sortable prop="goodsName" label="商品名称" width="140" show-overflow-tooltip>
+      <el-table-column sortable prop="orderStatus" label="工作城市" width="120" show-overflow-tooltip>
       </el-table-column>
-      <el-table-column sortable prop="orderStatus" label="订单状态" width="120" show-overflow-tooltip>
-      </el-table-column>
-      <el-table-column sortable prop="addTime" label="创建时间" width="180" show-overflow-tooltip>
+      <el-table-column sortable prop="addTime" label="大概薪酬" width="180" show-overflow-tooltip>
         <template slot-scope="scope">
           <div>{{scope.row.addTime|timestampToTime}}</div>
         </template>
@@ -150,7 +148,7 @@ export default {
       editFormVisible: false, //控制编辑页面显示与隐藏
       title: '预览',
       payType: [
-        { key: '请选择', value: 0 },
+        { key: '请选择公司类型', value: 0 },
         { key: '现金', value: 1 },
         { key: '支付宝', value: 2 },
         { key: '微信', value: 3 },
@@ -161,7 +159,7 @@ export default {
         { key: '会员余额支付', value: 9 }
       ],
       payway: [
-        { key: '请选择', value: 0 },
+        { key: '请选择学院', value: 0 },
         { key: '初始化', value: 1 },
         { key: '已支付', value: 2 },
         { key: '出货成功', value: 3 },
