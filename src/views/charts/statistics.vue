@@ -15,13 +15,13 @@
         <div class="stbgc">
           <el-row :gutter="23">
             <el-col :span="7">
-              <el-input size="small" v-model="machineNo" placeholder="输入学院搜索"></el-input>
+              <el-input size="small" v-model="sce.college" placeholder="输入学院搜索"></el-input>
             </el-col>
             <el-col :span="7">
-              <el-input size="small" v-model="machineNo" placeholder="输入专业搜索"></el-input>
+              <el-input size="small" v-model="sce.major" placeholder="输入专业搜索"></el-input>
             </el-col>
             <el-col :span="3" class="stsearch">
-              <el-button size="small" type="primary">搜索</el-button>
+              <el-button size="small" type="primary" @click="search">搜索</el-button>
             </el-col>
           </el-row>
         </div>
@@ -30,13 +30,13 @@
         <div class="stbgc">
           <el-row>
             <el-col :span="8" class="text-c">
-              <el-radio v-model="type" label="day">去年</el-radio>
+              <el-radio v-model="sce.year" label="2020">近三年</el-radio>
             </el-col>
             <el-col :span="8" class="text-c">
-              <el-radio v-model="type" label="month">近五年</el-radio>
+              <el-radio v-model="sce.year" label="2018">近五年</el-radio>
             </el-col>
             <el-col :span="8" class="text-c">
-              <el-radio v-model="type" label="years">近十年年</el-radio>
+              <el-radio v-model="sce.year" label="2013">近十年</el-radio>
             </el-col>
           </el-row>
         </div>
@@ -80,7 +80,11 @@
 <script type="text/ecmascript-6">
 
 import {
-  NumberOfGraduates
+  NumberOfGraduates,
+  workNumber,
+  noWork,
+  workTypeStatistics,
+  cooperativeCompanies
 } from '../../api/statisticsUrl'
 
 
@@ -89,6 +93,15 @@ export default {
   name: "welcome",
   data() {
     return {
+
+      sce: {
+        college: '',
+        major: '',
+        year: '2013',
+        token: localStorage.getItem('logintoken')
+      },
+
+
       machineNo: '',
       type: 'day',
       //  历年毕业人数
@@ -216,7 +229,7 @@ export default {
         },
         xAxis: {
           type: 'category',
-          data: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+          data: '',
           axisLine: {
             lineStyle: {
               color: "#999999",
@@ -249,23 +262,23 @@ export default {
             }
           }
         },
-        series: [{
+        series: {
           name: '历年就业人数',
           //   type: 'bar',
           type: 'line',
           barGap: 0,
-          data: [50000, 70000, 80000, 40000, 50000, 30000, 40000, 60000, 50000, 40000, 60000, 40000],
+          data: '',
           barWidth: 10,
           itemStyle: {
             color: "#108ff9"
           }
-        }]
+        }
       },
       //  历年升学人数
       Clickoption: {
         tooltip: {
           trigger: 'item',
-          formatter: "{a} <br/>{b}月 : {c}"
+          formatter: "{a} <br/>{b}年 : {c}人"
         },
         legend: {
           data: [{
@@ -291,7 +304,7 @@ export default {
         },
         xAxis: {
           type: 'category',
-          data: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+          data: '',
           axisLine: {
             lineStyle: {
               color: "#999999",
@@ -324,20 +337,20 @@ export default {
             }
           }
         },
-        series: [{
+        series: {
           name: '历年升学人数',
           type: 'bar',
           barGap: 0,
-          data: [50000, 10000, 80000, 30000, 50000, 60000, 40000, 80000, 50000, 20000, 60000, 40000],
+          data: '',
           barWidth: 10,
           itemStyle: {
             color: "#48cefd"
           }
-        }]
+        }
       },
       //  支付方式统计
       payoption: {
-        backgroundColor: '#2c343c',
+        backgroundColor: '#00152a',
         title: {
           text: '学生就业类型统计',
           left: 10,
@@ -355,15 +368,15 @@ export default {
 
         visualMap: {
           show: false,
-          min: 80,
-          max: 600,
+          min: 40000,
+          max: 180000,
           inRange: {
             colorLightness: [0, 1]
           }
         },
-        series: [
+        series:
           {
-            name: '支付方式统计(金额)',
+            name: '就业类型统计（人数）',
             type: 'pie',
             radius: '55%',
             center: ['50%', '50%'],
@@ -394,8 +407,8 @@ export default {
             },
             itemStyle: {
               normal: {
-                color: '#c23531',
-                shadowBlur: 200,
+                color: '#27a828',
+                shadowBlur: 100,
                 shadowColor: 'rgba(0, 0, 0, 0.5)'
               }
             },
@@ -406,12 +419,12 @@ export default {
               return Math.random() * 200;
             }
           }
-        ]
+
       },
       payNumoption: {
-        backgroundColor: '#2c343c',
+        backgroundColor: '#00152a',
         title: {
-          text: '合作企业类型统计',
+          text: '所有合作企业类型统计',
           left: 10,
           top: 5,
           textStyle: {
@@ -427,15 +440,15 @@ export default {
 
         visualMap: {
           show: false,
-          min: 80,
-          max: 600,
+          min: 1,
+          max: 8,
           inRange: {
             colorLightness: [0, 1]
           }
         },
-        series: [
+        series:
           {
-            name: '支付方式统计(笔数)',
+            name: '就业类型统计（人数）',
             type: 'pie',
             radius: '55%',
             center: ['50%', '50%'],
@@ -466,8 +479,8 @@ export default {
             },
             itemStyle: {
               normal: {
-                color: '#c23531',
-                shadowBlur: 200,
+                color: '#27a828',
+                shadowBlur: 100,
                 shadowColor: 'rgba(0, 0, 0, 0.5)'
               }
             },
@@ -478,7 +491,7 @@ export default {
               return Math.random() * 200;
             }
           }
-        ]
+
       },
     }
   },
@@ -490,19 +503,19 @@ export default {
   created() { },
   // 挂载结束状态(里面是操作)
   mounted() {
-    this.getSCE()
-    this.getSUM()
-    this.getClick()
-    this.getpay()
+    this.getSCE(this.sce)
+    this.getSUM(this.sce)
+    this.getClick(this.sce)
+    this.getpay(this.sce)
     this.getpayNum()
   },
   // 里面的函数只有调用才会执行
   methods: {
 
     // 交易总笔数
-    getSCE() {
+    getSCE(parameter) {
       //发送请求
-      NumberOfGraduates().then(res => {
+      NumberOfGraduates(parameter).then(res => {
         this.SCEoption.xAxis.data = res.data.x
         this.SCEoption.series.data=res.data.y
         this.chart = Chart.init(this.$refs.SCEchart)
@@ -510,25 +523,47 @@ export default {
       })
     },
     // 交易总金额
-    getSUM() {
-      this.chart = Chart.init(this.$refs.SUMEchart)
-      this.chart.setOption(this.SUMoption)
+    getSUM(parameter) {
+      workNumber(parameter).then(res => {
+        this.SUMoption.xAxis.data = res.data.x
+        this.SUMoption.series.data=res.data.y
+        this.chart = Chart.init(this.$refs.SUMEchart)
+        this.chart.setOption(this.SUMoption)
+      })
     },
     // 历年升学人数
-    getClick() {
-      this.chart = Chart.init(this.$refs.ClickEchart)
-      this.chart.setOption(this.Clickoption)
+    getClick(parameter) {
+      noWork(parameter).then(res => {
+        this.Clickoption.xAxis.data = res.data.x
+        this.Clickoption.series.data=res.data.y
+        this.chart = Chart.init(this.$refs.ClickEchart)
+        this.chart.setOption(this.Clickoption)
+      })
     },
-    // 支付方式统计
-    getpay() {
-      this.chart = Chart.init(this.$refs.payEchart)
-      this.chart.setOption(this.payoption)
+    // 就业类型统计统计
+    getpay(parameter) {
+      workTypeStatistics(parameter).then(res => {
+        this.payoption.series.data=res.data
+        this.chart = Chart.init(this.$refs.payEchart)
+        this.chart.setOption(this.payoption)
+      })
     },
     // 支付方式统计
     getpayNum() {
-      this.chart = Chart.init(this.$refs.payNumEchart)
-      this.chart.setOption(this.payNumoption)
-    }
+      cooperativeCompanies().then(res => {
+        this.payNumoption.series.data=res.data
+        this.chart = Chart.init(this.$refs.payNumEchart)
+        this.chart.setOption(this.payNumoption)
+      })
+
+    },
+    // 搜索事件
+    search() {
+      this.getSCE(this.sce)
+      this.getSUM(this.sce)
+      this.getClick(this.sce)
+      this.getpay(this.sce)
+    },
 
   }
 };
