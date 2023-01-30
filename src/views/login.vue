@@ -1,6 +1,7 @@
 <template>
   <div class="login-wrap">
-    <el-form label-position="left" :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" class="demo-ruleForm login-container">
+    <el-form label-position="left" :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px"
+             class="demo-ruleForm login-container">
       <h3 class="title">用户登录</h3>
       <el-form-item prop="loginName">
         <el-input type="text" v-model="ruleForm.loginName" auto-complete="off" placeholder="账号"></el-input>
@@ -10,19 +11,19 @@
       </el-form-item>
 
 
-<!--      登录验证码模块-->
+      <!--      登录验证码模块-->
 
-<!--      <el-row>-->
-<!--        <el-col :span="12">-->
-<!--          <el-form-item prop="code">-->
-<!--            <el-input type="text" v-model="ruleForm.code" auto-complete="off" placeholder="图形验证码" @keyup.enter.native="submitForm('ruleForm')"></el-input>-->
-<!--          </el-form-item>-->
-<!--        </el-col>-->
-<!--        <el-col :span="12" class="code-box">-->
-<!--          <img :src="ruleForm.codeimg" alt="" class="codeimg" @click="getcode()">-->
-<!--        </el-col>-->
-<!--      </el-row>-->
-
+      <el-row>
+        <el-col :span="12">
+          <el-form-item prop="code">
+            <el-input type="text" v-model="ruleForm.code" auto-complete="off" placeholder="图形验证码"
+                      @keyup.enter.native="submitForm('ruleForm')"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12" class="code-box">
+          <img :src="ruleForm.codeimg" alt="" class="codeimg" @click="getcode()">
+        </el-col>
+      </el-row>
 
 
       <el-checkbox class="remember" v-model="rememberpwd">记住密码</el-checkbox>
@@ -33,9 +34,9 @@
   </div>
 </template>
 <script type="text/ecmascript-6">
-import { login } from '../api/userMG'
-import { setCookie, getCookie, delCookie } from '../utils/util'
-import md5 from 'js-md5'
+import {login} from '../api/userMG'
+import {setCookie, getCookie, delCookie} from '../utils/util'
+
 export default {
   name: 'login',
   data() {
@@ -51,9 +52,9 @@ export default {
       },
       //rules前端验证
       rules: {
-        loginName: [{ required: true, message: '请输入账号', trigger: 'blur' }],
-        password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
-        code: [{ required: true, message: '请输入验证码', trigger: 'blur' }]
+        loginName: [{required: true, message: '请输入账号', trigger: 'blur'}],
+        password: [{required: true, message: '请输入密码', trigger: 'blur'}],
+        code: [{required: true, message: '请输入验证码', trigger: 'blur'}]
       }
     }
   },
@@ -86,12 +87,12 @@ export default {
           login(this.ruleForm)
             .then(
               res => {
-                if (res.code===200) {
-                    this.logining = false
-                    localStorage.setItem('userdata',JSON.stringify(res.data))
-                    localStorage.setItem('token',JSON.stringify(res.msg))
-                    this.$store.commit('login', 'true')
-                    this.$router.push({ path: '/goods/Goods' })
+                if (res.code === 200) {
+                  this.logining = false
+                  localStorage.setItem('userdata', JSON.stringify(res.data))
+                  localStorage.setItem('token', JSON.stringify(res.msg))
+                  this.$store.commit('login', 'true')
+                  this.$router.push({path: '/goods/Goods'})
                 } else {
                   this.logining = false
                   this.$message.error(res.data)
@@ -110,6 +111,12 @@ export default {
       })
 
     },
+    getcode() {
+      let myDate = new Date()
+      let randomstr = myDate.getTime()
+      this.ruleForm.randomStr = randomstr
+      this.ruleForm.codeimg = 'http://localhost:8005/user/captcha'
+    }
   }
 }
 </script>
@@ -126,6 +133,7 @@ export default {
   background-position: center right;
   background-size: 100%;
 }
+
 .login-container {
   border-radius: 10px;
   margin: 0px auto;
@@ -136,17 +144,21 @@ export default {
   text-align: left;
   box-shadow: 0 0 20px 2px rgba(0, 0, 0, 0.1);
 }
+
 .title {
   margin: 0px auto 40px auto;
   text-align: center;
   color: #505458;
 }
+
 .remember {
   margin: 0px 0px 35px 0px;
 }
+
 .code-box {
   text-align: right;
 }
+
 .codeimg {
   height: 40px;
 }
