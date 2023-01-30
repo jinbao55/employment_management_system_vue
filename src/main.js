@@ -68,6 +68,16 @@ router.beforeEach((to, from, next) => {
     }
 })
 
+// http request 拦截器
+axios.interceptors.request.use(
+  config => {
+    let token = JSON.parse(localStorage.getItem('token'))
+    if (token) {
+      config.headers.Authorization = token;
+    }
+    return config;
+  }
+);
 /* eslint-disable no-new */
 new Vue({
     el: '#app',

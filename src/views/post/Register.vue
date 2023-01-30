@@ -265,6 +265,9 @@ export default {
             this.pageparm.pageSize = this.formInline.limit
             this.pageparm.total = res.code
           }
+          if(res.code==505){
+            this.$message.error('请重新登陆')
+          }
         })
         .catch(err => {
           this.loading = false

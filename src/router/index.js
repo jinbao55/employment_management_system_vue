@@ -77,7 +77,7 @@ Vue.use(Router);
 export default new Router({
     routes: [{
         path: '/',
-        name: '',
+        name: '登录',
         component: login,
         hidden: true,
         meta: {

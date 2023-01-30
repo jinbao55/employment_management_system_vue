@@ -77,8 +77,7 @@ export default {
       editForm: {
         deptId: '',
         deptName: '',
-        deptNo: '',
-        token: localStorage.getItem('logintoken')
+        deptNo: ''
       },
       // rules表单验证
       rules: {
@@ -91,13 +90,11 @@ export default {
         page: 1,
         limit: 10,
         varLable: '',
-        varName: '',
-        token: localStorage.getItem('logintoken')
+        varName: ''
       },
       // 删除部门
       seletedata: {
-        ids: '',
-        token: localStorage.getItem('logintoken')
+        ids: ''
       },
       userparm: [], //搜索权限
       listData: [], //用户数据
@@ -329,4 +326,3 @@ export default {
 }
 </style>
 
- 

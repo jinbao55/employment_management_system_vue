@@ -6,7 +6,7 @@ export const login = (params) => { return loginreq("post", "/user/toLogin", para
 // 获取用户菜单
 export const menu = (params) => { return axios.get("/api/menu?&token=" + localStorage.getItem('logintoken')).then(res => res.data) };
 // 退出接口
-export const loginout = () => { return axios.delete("/api/login?&token=" + localStorage.getItem('logintoken')).then(res => res.data) };
+export const loginout = (params) => { return req("post", "/user/loginout", params) };
 
 /**
  * 用户管理
@@ -20,7 +20,7 @@ export const userDelete = (params) => { return axios.delete("/api/User/delete?id
 // 用户管理-重置密码
 export const userPwd = (params) => { return req("post", "/api/User/pwd", params) };
 // 用户管理-修改状态
-export const userLock = (params) => { return axios.get("/api/User/lock?userId=" + params.userId + "&lock=" + params.lock + "&token=" + localStorage.getItem('logintoken')) };
+export const userLock = (params) => { return req("post", "/user/updateUserstate", params)};
 // 用户管理-数据权限
 export const UserDeptTree = (params) => { return axios.get("/api/UserDept/tree/" + params + "?token=" + localStorage.getItem('logintoken')) };
 // 用户管理-数据权限保存

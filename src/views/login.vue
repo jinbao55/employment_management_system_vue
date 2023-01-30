@@ -81,24 +81,25 @@ export default {
     //获取info列表
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
+        this.logining = true
         if (valid) {
           login(this.ruleForm)
             .then(
               res => {
                 if (res.code===200) {
                     this.logining = false
+                    localStorage.setItem('userdata',JSON.stringify(res.data))
+                    localStorage.setItem('token',JSON.stringify(res.msg))
                     this.$store.commit('login', 'true')
                     this.$router.push({ path: '/goods/Goods' })
                 } else {
-                  this.$message({
-                    message: res.data
-                  })
                   this.logining = false
+                  this.$message.error(res.data)
                   return false
                 }
-              }
+              },
             )
-            this.logining = true
+          this.logining = false
         } else {
           // 获取图形验证码
           this.getcode()
@@ -107,6 +108,7 @@ export default {
           return false
         }
       })
+
     },
   }
 }
