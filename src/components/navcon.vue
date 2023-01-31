@@ -44,10 +44,6 @@ export default {
           setTimeout(() => {
             this.$store.commit('logout', 'false')
             this.$router.push({ path: '/login' })
-            this.$message({
-              type: 'success',
-              message: '已退出登录!'
-            })
           }, 1000)
           loginout(this.tokens)
             .then(res => {
@@ -62,7 +58,6 @@ export default {
                   })
                 }, 1000)
               } else {
-                this.$message.error(res.msg)
                 this.logining = false
                 return false
               }

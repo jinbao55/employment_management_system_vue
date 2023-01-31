@@ -4,7 +4,7 @@ import { loginreq, req } from './axiosFun';
 // 登录接口
 export const login = (params) => { return loginreq("post", "/user/toLogin", params) };
 // 获取用户菜单
-export const menu = (params) => { return axios.get("/api/menu?&token=" + localStorage.getItem('logintoken')).then(res => res.data) };
+export const menu = (params) => { return req("post", "/menu/getMenu", params) };
 // 退出接口
 export const loginout = (params) => { return req("post", "/user/loginout", params) };
 
@@ -42,7 +42,7 @@ export const ModuleList = () => { return req("post", "/api/Module/list") };
 // 菜单管理-根据菜单获取数据
 export const ModuleGet = (params) => { return axios.get("/api/Module/get/" + params + "?token=" + localStorage.getItem('logintoken')) };
 // 菜单管理-获取父级菜单Module/nodes
-export const ModuleNodes = (params) => { return req("post", "/api/Module/nodes", params) };
+export const ModuleNodes = (params) => { return req("post", "/menu/getPageList", params) };
 // 菜单管理-修改菜单
 export const ModuleSave = (params) => { return req("post", "/api/Module/save", params) };
 // 菜单管理-删除菜单

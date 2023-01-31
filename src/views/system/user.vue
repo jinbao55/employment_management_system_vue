@@ -81,8 +81,8 @@
         <el-form-item label="用户类型" prop="type">
           <el-select size="small" v-model="editForm.type" placeholder="请选择" class="userRole">
             <el-option label="学生" value="学生"></el-option>
-            <el-option label="教职工" value="学生"></el-option>
-            <el-option label="管理员" value="学生"></el-option>
+            <el-option label="教职工" value="教职工"></el-option>
+            <el-option label="管理员" value="管理员"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="手机号" prop="tel">

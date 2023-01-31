@@ -26,3 +26,13 @@ export const RegisterGetPageList = (params) => { return req("post", "/register/g
 export const RegisterEditSave = (params) => { return req("post", "/register/editSave", params) };
 //就业登记删除
 export const RegisterDelete = (params) => { return req("post", "/register/delete", params) };
+
+
+export const getMenuPageList = (params) => { return req("post", "/menu/getPageList", params) };
+
+export const MenuEditSave = (params) => { return req("post", "/menu/editSave", params) };
+
+export const MenuDelete = (params) => { return req("post", "/menu/delete", params) };
+
+
+
