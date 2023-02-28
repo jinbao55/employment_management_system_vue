@@ -445,7 +445,6 @@ export default {
                   message: '数据已删除!'
                 })
                 this.getdata(this.formInline)
-                this.getdata(this.formInline)
               } else {
                 this.$message({
                   type: 'info',

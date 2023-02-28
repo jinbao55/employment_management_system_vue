@@ -34,7 +34,7 @@
   </div>
 </template>
 <script type="text/ecmascript-6">
-import {login} from '../api/userMG'
+import {getcodeValue, login} from '../api/userMG'
 import {setCookie, getCookie, delCookie} from '../utils/util'
 
 export default {
@@ -68,6 +68,8 @@ export default {
     this.getcode()
     // 获取存在本地的用户名密码
     this.getuserpwd()
+    //获得验证码
+    this.getcodeValue()
   },
   // 里面的函数只有调用才会执行
   methods: {
@@ -112,12 +114,19 @@ export default {
 
     },
     getcode() {
-      let myDate = new Date()
-      let randomstr = myDate.getTime()
-      this.ruleForm.randomStr = randomstr
       this.ruleForm.codeimg = 'http://localhost:8005/user/captcha'
     }
+  },
+  getcodeValue() {
+    getcodeValue()
+      .then(
+        res => {
+          this.$message.error(res)
+        },
+      )
   }
+
+
 }
 </script>
 

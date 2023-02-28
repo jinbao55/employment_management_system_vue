@@ -6,42 +6,30 @@
     <!-- 面包屑导航 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>角色管理</el-breadcrumb-item>
+      <el-breadcrumb-item>通知管理</el-breadcrumb-item>
     </el-breadcrumb>
     <!-- 搜索筛选 -->
     <el-form :inline="true" :model="formInline" class="user-search">
-
-      <el-form-item label="搜索：">
-        <el-input size="small" v-model="formInline.roleName" placeholder="输入角色名称"></el-input>
-      </el-form-item>
-      <el-form-item label="">
-        <el-input size="small" v-model="formInline.roleNo" placeholder="输入角色代码"></el-input>
-      </el-form-item>
       <el-form-item>
-        <el-button size="small" type="primary" icon="el-icon-search" @click="search">搜索</el-button>
-        <el-button size="small" type="primary" icon="el-icon-plus" @click="handleEdit()">添加</el-button>
+        <el-button size="small" type="primary" icon="el-icon-plus" @click="handleEditTest()">添加</el-button>
       </el-form-item>
     </el-form>
     <!--列表-->
     <el-table size="small" :data="listData" highlight-current-row v-loading="loading" border element-loading-text="拼命加载中" style="width: 100%;">
       <el-table-column align="center" type="selection" width="60">
       </el-table-column>
-      <el-table-column sortable prop="roleName" label="角色名称" width="300">
+      <el-table-column sortable prop="title" label="标题" width="300">
       </el-table-column>
-      <el-table-column sortable prop="roleNo" label="角色代码" width="300">
+      <el-table-column sortable prop="content" label="内容" width="300">
       </el-table-column>
-      <el-table-column sortable prop="editTime" label="修改时间" width="300">
-        <template slot-scope="scope">
-          <div>{{scope.row.editTime|timestampToTime}}</div>
-        </template>
+      <el-table-column sortable prop="author" label="作者" width="300">
       </el-table-column>
-      <el-table-column sortable prop="editUser" label="修改人" width="300">
+      <el-table-column sortable prop="date" label="时间" width="300">
       </el-table-column>
       <el-table-column align="center" label="操作" min-width="300">
         <template slot-scope="scope">
-          <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+          <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">展示在首页</el-button>
           <el-button size="mini" type="danger" @click="deleteUser(scope.$index, scope.row)">删除</el-button>
-          <el-button size="mini" type="success" @click="menuAccess(scope.$index, scope.row)">菜单权限</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -50,14 +38,17 @@
     <!-- 编辑界面 -->
     <el-dialog :title="title" :visible.sync="editFormVisible" width="30%" @click='closeDialog("edit")'>
       <el-form label-width="120px" :model="editForm" ref="editForm" :rules="rules">
-        <el-form-item label="系统编码" prop="systemNo">
-          <el-input size="small" v-model="editForm.systemNo" auto-complete="off" placeholder="请输入系统编码"></el-input>
+        <el-form-item label="标题" prop="systemNo">
+          <el-input size="small" v-model="editForm.title" auto-complete="off" placeholder="请输入标题"></el-input>
         </el-form-item>
-        <el-form-item label="角色名称" prop="roleName">
-          <el-input size="small" v-model="editForm.roleName" auto-complete="off" placeholder="请输入角色名称"></el-input>
+        <el-form-item label="内容" prop="roleName">
+          <el-input size="small" v-model="editForm.content" auto-complete="off" placeholder="请输入内容"></el-input>
         </el-form-item>
-        <el-form-item label="角色代码" prop="roleNo">
-          <el-input size="small" v-model="editForm.roleNo" auto-complete="off" placeholder="请输入角色代码"></el-input>
+        <el-form-item label="作者" prop="roleNo">
+          <el-input size="small" v-model="editForm.author" auto-complete="off" placeholder="请输入作者"></el-input>
+        </el-form-item>
+        <el-form-item label="时间" prop="roleNo">
+          <el-input size="small" v-model="editForm.date" auto-complete="off" placeholder="请输入时间"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -79,15 +70,18 @@
 
 <script>
 import {
-  roleList,
+  setShow,
   roleSave,
+  addNotice,
   roleDelete,
-  rolePwd,
   RoleRightTree,
-  RoleRightSave
+  RoleRightSave,
+  deleteNotice,
+  getNoticePageList
 } from '../../api/userMG'
 import Pagination from '../../components/Pagination'
 export default {
+  inject:['reload'],//  此处引入在app中定义的reload方法
   data() {
     return {
       nshow: true, //switch开启
@@ -97,24 +91,15 @@ export default {
       menuAccessshow: false, //控制数据权限显示与隐藏
       title: '添加',
       editForm: {
-        roleId: '',
-        systemNo: '',
-        roleNo: '',
-        roleName: '',
+        id: '',
+        title: '',
+        content: '',
+        author: '',
+        date: '',
         token: localStorage.getItem('logintoken')
       },
       // rules 表单验证
-      rules: {
-        systemNo: [
-          { required: true, message: '请输入系统编码', trigger: 'blur' }
-        ],
-        roleNo: [
-          { required: true, message: '请输入角色代码', trigger: 'blur' }
-        ],
-        roleName: [
-          { required: true, message: '请输入角色名称', trigger: 'blur' }
-        ]
-      },
+
       formInline: {
         page: 1,
         limit: 10,
@@ -172,105 +157,29 @@ export default {
   methods: {
     // 获取角色列表
     getdata(parameter) {
-      // 模拟数据
-      let res = {
-        code: 0,
-        msg: null,
-        count: 6,
-        data: [
-          {
-            addUser: 'root',
-            editUser: 'root',
-            addTime: 1519182004000,
-            editTime: 1520288426000,
-            roleId: 1,
-            systemNo: 'pmd',
-            roleNo: 'Administrator',
-            roleName: '超级管理员'
-          },
-          {
-            addUser: null,
-            editUser: null,
-            addTime: 1521111376000,
-            editTime: 1520678191000,
-            roleId: 2,
-            systemNo: 'order',
-            roleNo: 'admin',
-            roleName: '公司管理员'
-          },
-          {
-            addUser: null,
-            editUser: null,
-            addTime: 1520678221000,
-            editTime: 1520678221000,
-            roleId: 95,
-            systemNo: 'pm',
-            roleNo: 'common',
-            roleName: '普通用户'
-          },
-          {
-            addUser: null,
-            editUser: null,
-            addTime: 1526349853000,
-            editTime: 1526349853000,
-            roleId: 96,
-            systemNo: '1',
-            roleNo: '1',
-            roleName: '1'
-          },
-          {
-            addUser: null,
-            editUser: null,
-            addTime: 1526349942000,
-            editTime: 1526437443000,
-            roleId: 97,
-            systemNo: '2',
-            roleNo: '2',
-            roleName: '2'
-          },
-          {
-            addUser: null,
-            editUser: null,
-            addTime: 1526652148000,
-            editTime: 1526652148000,
-            roleId: 101,
-            systemNo: 'test',
-            roleNo: 'demo',
-            roleName: '演示角色'
-          }
-        ]
-      }
-      this.loading = false
-      this.listData = res.data
-      // 分页赋值
-      this.pageparm.currentPage = this.formInline.page
-      this.pageparm.pageSize = this.formInline.limit
-      this.pageparm.total = res.count
-      // 模拟数据结束
-
       /***
        * 调用接口，注释上面模拟数据 取消下面注释
        */
-      // roleList(parameter)
-      //   .then(res => {
-      //     this.loading = false
-      //     if (res.success == false) {
-      //       this.$message({
-      //         type: 'info',
-      //         message: res.msg
-      //       })
-      //     } else {
-      //       this.listData = res.data
-      //       // 分页赋值
-      //       this.pageparm.currentPage = this.formInline.page
-      //       this.pageparm.pageSize = this.formInline.limit
-      //       this.pageparm.total = res.count
-      //     }
-      //   })
-      //   .catch(err => {
-      //     this.loading = false
-      //     this.$message.error('获取角色列表失败，请稍后再试！')
-      //   })
+      getNoticePageList(parameter)
+        .then(res => {
+          this.loading = false
+          if (res.success == false) {
+            this.$message({
+              type: 'info',
+              message: res.msg
+            })
+          } else {
+            this.listData = res.data
+            // 分页赋值
+            this.pageparm.currentPage = this.formInline.page
+            this.pageparm.pageSize = this.formInline.limit
+            this.pageparm.total = res.count
+          }
+        })
+        .catch(err => {
+          this.loading = false
+          this.$message.error('获取角色列表失败，请稍后再试！')
+        })
     },
     // 分页插件事件
     callFather(parm) {
@@ -282,8 +191,8 @@ export default {
     search() {
       this.getdata(this.formInline)
     },
-    //显示编辑界面
-    handleEdit: function(index, row) {
+
+    handleEditTest: function(index, row) {
       this.editFormVisible = true
       if (row != undefined && row != 'undefined') {
         this.title = '修改'
@@ -293,17 +202,54 @@ export default {
         this.editForm.roleName = row.roleName
       } else {
         this.title = '添加'
-        this.editForm.roleId = ''
-        this.editForm.systemNo = ''
-        this.editForm.roleNo = ''
-        this.editForm.roleName = ''
+        this.editForm.date = ''
+        this.editForm.title = ''
+        this.editForm.content = ''
+        this.editForm.author = ''
       }
+    },
+
+
+    //显示编辑界面
+    handleEdit: function(index, row) {
+      this.$confirm('要把这条通知展示在首页吗?', '信息', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(() => {
+          setShow(row.id)
+            .then(res => {
+              if (res.success) {
+                this.$message({
+                  type: 'success',
+                  message: '已设置为首页展示！'
+                })
+                this.getdata(this.formInline)
+              } else {
+                this.$message({
+                  type: 'info',
+                  message: res.msg
+                })
+              }
+            })
+            .catch(err => {
+              this.loading = false
+              this.$message.error('设置失败，请稍后再试！')
+            })
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消展示'
+          })
+        })
     },
     // 编辑、增加页面保存方法
     submitForm(editData) {
       this.$refs[editData].validate(valid => {
         if (valid) {
-          roleSave(this.editForm)
+          addNotice(this.editForm)
             .then(res => {
               this.editFormVisible = false
               this.loading = false
@@ -313,11 +259,13 @@ export default {
                   type: 'success',
                   message: '角色保存成功！'
                 })
+                this.getdata(this.formInline)
               } else {
                 this.$message({
                   type: 'info',
                   message: res.msg
                 })
+                this.getdata(this.formInline)
               }
             })
             .catch(err => {
@@ -338,12 +286,12 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          roleDelete(row.roleId)
+          deleteNotice(row.id)
             .then(res => {
               if (res.success) {
                 this.$message({
                   type: 'success',
-                  message: '角色已删除！'
+                  message: '已删除！'
                 })
                 this.getdata(this.formInline)
               } else {
@@ -351,11 +299,12 @@ export default {
                   type: 'info',
                   message: res.msg
                 })
+                this.getdata(this.formInline)
               }
             })
             .catch(err => {
               this.loading = false
-              this.$message.error('角色删除失败，请稍后再试！')
+              this.$message.error('删除失败，请稍后再试！')
             })
         })
         .catch(() => {
@@ -455,12 +404,12 @@ export default {
         }
         parm.moduleIds = JSON.stringify(moduleIds)
       }
-      RoleRightSave(parm)
+      addNotice(parm)
         .then(res => {
           if (res.success) {
             this.$message({
               type: 'success',
-              message: '权限保存成功'
+              message: '添加成功'
             })
             this.menuAccessshow = false
             this.getdata(this.formInline)
@@ -497,4 +446,3 @@ export default {
 }
 </style>
 
- 

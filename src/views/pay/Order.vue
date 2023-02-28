@@ -553,11 +553,13 @@ export default {
                   type: 'success',
                   message: '公司保存成功！'
                 })
+                this.getdata(this.formInline)
               } else {
                 this.$message({
                   type: 'info',
                   message: res.msg
                 })
+                this.getdata(this.formInline)
               }
             })
             .catch(err => {
@@ -591,6 +593,7 @@ export default {
                   type: 'info',
                   message: res.msg
                 })
+                this.getdata(this.formInline)
               }
             })
             .catch(err => {

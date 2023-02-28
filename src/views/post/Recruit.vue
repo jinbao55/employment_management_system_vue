@@ -281,14 +281,14 @@ export default {
                   message: '保存成功！'
                 })
                 //保存成后刷新当前页
-                this.reload();
+                this.getdata(this.formInline)
               } else {
                 this.$message({
                   type: 'success',
                   message: res.msg
                 })
                 //保存成后刷新当前页
-                this.reload();
+                this.getdata(this.formInline)
               }
             })
             .catch(err => {
@@ -323,7 +323,7 @@ export default {
                   message: res.msg
                 })
                 //保存成后刷新当前页
-                this.reload();
+                this.getdata(this.formInline)
               }
             })
             .catch(err => {

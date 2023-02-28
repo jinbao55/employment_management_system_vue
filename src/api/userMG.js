@@ -7,6 +7,11 @@ export const login = (params) => { return loginreq("post", "/user/toLogin", para
 export const menu = (params) => { return req("post", "/menu/getMenu", params) };
 // 退出接口
 export const loginout = (params) => { return req("post", "/user/loginout", params) };
+//获取验证码
+export const getcodeValue= (params) => { return axios.get("/user/getCode").then(res => res.data) };
+
+
+
 
 /**
  * 用户管理
@@ -95,3 +100,23 @@ export const ermissionDelete = (params) => { return axios.delete("/api/Permissio
 export const roleDropDown = () => { return axios.get("/api/Role/dropDown/all?&token=" + localStorage.getItem('logintoken')).then(res => res.data) };
 // 权限管理-配置权限
 export const RolePermission = (params) => { return req("post", "/api/RolePermission/save", params) };
+
+
+
+//获取通知
+export const getNotice= (params) => { return axios.get("/notice/getNotice").then(res => res.data) };
+
+
+//获取通知列表
+export const getNoticePageList = (params) => { return req("post", "/notice/getPageList", params) };
+
+
+//删除通知
+export const deleteNotice = (params) => { return req("post", "/notice/delete", params) };
+
+
+//设置为展示
+export const setShow = (params) => { return req("post", "/notice/setShow", params) };
+
+
+export const addNotice = (params) => { return req("post", "/notice/add", params) };
