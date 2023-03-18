@@ -128,6 +128,18 @@ export default {
         partner: '',
         token: localStorage.getItem('logintoken')
       },
+      rules: {
+        name: [
+          {required: true, message: '请输入企业名称', trigger: 'blur'}
+        ],
+        cooperation: [
+          {required: true, message: '请输入合作学院', trigger: 'blur'}
+        ],
+        employmentCompany: [
+          {required: true, message: '请输入就业公司', trigger: 'blur'}
+        ],
+        roleId: [{required: true, message: '请选择角色', trigger: 'blur'}]
+      },
       // 删除部门
       seletedata: {
         ids: '',

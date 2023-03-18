@@ -147,6 +147,18 @@ export default {
         date: '',
         token: localStorage.getItem('logintoken')
       },
+      rules: {
+        theme: [
+          {required: true, message: '请输入招聘主题', trigger: 'blur'}
+        ],
+        company: [
+          {required: true, message: '请输入招聘企业', trigger: 'blur'}
+        ],
+        state: [
+          {required: true, message: '请输入状态', trigger: 'blur'}
+        ],
+        roleId: [{required: true, message: '请选择角色', trigger: 'blur'}]
+      },
       formInline: {
         page: 1,
         limit: 10,

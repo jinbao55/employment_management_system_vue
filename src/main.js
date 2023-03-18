@@ -19,7 +19,7 @@ Vue.prototype.$echarts = echarts
 
 import axios from 'axios';
 Vue.prototype.$axios = axios;
-axios.defaults.baseURL = 'http://127.0.0.1:8005/'
+axios.defaults.baseURL = 'http://localhost:8005'
 
 Vue.config.productionTip = false;
 

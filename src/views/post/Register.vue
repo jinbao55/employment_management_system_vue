@@ -82,7 +82,7 @@
           <el-input size="small" v-model="editForm.sno" auto-complete="off" placeholder="请输入学号"></el-input>
         </el-form-item>
         <el-form-item label="就读学院" prop="college">
-          <el-select size="small" v-model="editForm.graduationYear" placeholder="请选择企业类型" class="userRole">
+          <el-select size="small" v-model="editForm.college" placeholder="请选择企业类型" class="userRole">
             <el-option v-for="type in payway" :label="type.key" :value="type.value" :key="type.value"></el-option>
           </el-select>
         </el-form-item>
@@ -199,6 +199,37 @@ export default {
         pay:'',
         workCities:'',
         token: localStorage.getItem('logintoken')
+      },
+      rules: {
+        name: [
+          {required: true, message: '请输入用户名', trigger: 'blur'}
+        ],
+        sno: [
+          {required: true, message: '请输入学号', trigger: 'blur'}
+        ],
+        employmentCompany: [
+          {required: true, message: '请输入就业公司', trigger: 'blur'}
+        ],
+        roleId: [{required: true, message: '请选择角色', trigger: 'blur'}],
+        tel: [
+          {required: true, message: '请输入手机号', trigger: 'blur'},
+          {
+            pattern: /^1(3\d|47|5((?!4)\d)|7(0|1|[6-8])|8\d)\d{8,8}$/,
+            required: true,
+            message: '请输入正确的手机号',
+            trigger: 'blur'
+          }
+        ],
+        userEmail: [
+          {required: true, message: '请输入邮箱', trigger: 'blur'},
+          {
+            pattern: /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/,
+            required: true,
+            message: '请输入正确的邮箱',
+            trigger: 'blur'
+          }
+        ],
+        userSex: [{required: true, message: '请选择性别', trigger: 'blur'}]
       },
       formInline: {
         page: 1,

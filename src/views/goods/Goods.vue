@@ -12,9 +12,7 @@
       <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>通知</el-breadcrumb-item>
     </el-breadcrumb>
-
     <div>
-
       <h1>通知</h1>
         <el-card shadow="hover" style="width: 100%;">
           <div slot="header" class="clearfix">
@@ -22,10 +20,8 @@
           </div>
           <div style="font-size: 18px;text-align: center; ">{{tz.content}}</div>
           <div style="margin-top: 40px;"></div>
-
           <div style="font-size: 18px;text-align: center; ">{{tz.author}}</div>
           <div style="font-size: 18px;text-align: center; ">{{tz.date}}</div>
-
         </el-card>
 
     </div>

@@ -52,27 +52,27 @@
             <el-input size="small" v-model="editForm.menuid" auto-complete="off" placeholder="请输入menuid"></el-input>
           </el-form-item>
           <el-form-item label="icon" prop="icon">
-            <el-input size="small" v-model="editForm.icon" auto-complete="off" placeholder="请输入学号"></el-input>
+            <el-input size="small" v-model="editForm.icon" auto-complete="off" placeholder="请输入icon"></el-input>
           </el-form-item>
         <el-form-item label="页面名称" prop="menuname">
-          <el-input size="small" v-model="editForm.menuname" auto-complete="off" placeholder="请输入就读专业"></el-input>
+          <el-input size="small" v-model="editForm.menuname" auto-complete="off" placeholder="请输入页面名称"></el-input>
         </el-form-item>
           <el-form-item label="存在三层" prop="hasThird">
-            <el-select size="small" v-model="editForm.hasThird" placeholder="请选择企业类型" class="userRole">
+            <el-select size="small" v-model="editForm.hasThird" placeholder="请输入" class="userRole">
               <el-option v-for="type in payway" :label="type.key" :value="type.value" :key="type.value"></el-option>
             </el-select>
           </el-form-item>
         <el-form-item label="路径" prop="url">
-          <el-input size="small" v-model="editForm.url" auto-complete="off" placeholder="请输入就读专业"></el-input>
+          <el-input size="small" v-model="editForm.url" auto-complete="off" placeholder="请输入路径"></el-input>
         </el-form-item>
         <el-form-item label="父级ID" prop="parentId">
-          <el-input size="small" v-model="editForm.parentId" auto-complete="off" placeholder="请输入就读专业"></el-input>
+          <el-input size="small" v-model="editForm.parentId" auto-complete="off" placeholder="请输入父级ID"></el-input>
         </el-form-item>
         <el-form-item label="排序" prop="sort">
-          <el-input size="small" v-model="editForm.sort" auto-complete="off" placeholder="请输入就读专业"></el-input>
+          <el-input size="small" v-model="editForm.sort" auto-complete="off" placeholder="请输入排序"></el-input>
         </el-form-item>
         <el-form-item label="是否关键" prop="isCrux">
-          <el-input size="small" v-model="editForm.isCrux" auto-complete="off" placeholder="请输入就读专业"></el-input>
+          <el-input size="small" v-model="editForm.isCrux" auto-complete="off" placeholder="请输入是否关键"></el-input>
         </el-form-item>
 
       </el-form>
@@ -110,6 +110,17 @@ export default {
         { key: '考研', value: '考研' },
         { key: '其他', value: '其他' }
       ],
+      rules: {
+        menuid: [
+          {required: true, message: '请输入菜单ID', trigger: 'blur'}
+        ],
+        sort: [
+          {required: true, message: '请输入排序', trigger: 'blur'}
+        ],
+        isCrux: [
+          {required: true, message: '请输入是否关键', trigger: 'blur'}
+        ]
+      },
       dateType: [
         { key: '请选择毕业时间', value: '' },
         { key: '2023', value: 2023 },

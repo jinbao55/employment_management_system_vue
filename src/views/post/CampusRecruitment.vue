@@ -36,7 +36,7 @@
       </el-table-column>
       <el-table-column sortable prop="company" label="招聘企业" width="140" show-overflow-tooltip>
       </el-table-column>
-      <el-table-column sortable prop="place" label="地点" width="140" show-overflow-tooltip>
+      <el-table-column sortable prop="place" label="宣讲地点" width="140" show-overflow-tooltip>
       </el-table-column>
       <el-table-column sortable prop="teacher" label="联系老师" width="100" show-overflow-tooltip>
       </el-table-column>
@@ -62,19 +62,19 @@
     <!-- 编辑界面 -->
     <el-dialog :title="title" :visible.sync="editFormVisible" width="30%" @click="closeDialog('editForm')">
       <el-form label-width="120px" :model="editForm" :rules="rules" ref="editForm">
-        <el-form-item label="宣讲主题" prop="theme">
+        <el-form-item label="宣讲主题" prop="lectureTheme">
           <el-input size="small" v-model="editForm.lectureTheme" auto-complete="off" placeholder="请输入招聘主题"></el-input>
         </el-form-item>
-        <el-form-item label="宣讲时间" prop="company">
-          <el-input size="small" v-model="editForm.lectureTime" auto-complete="off" placeholder="请输入招聘企业"></el-input>
+        <el-form-item label="宣讲时间" prop="lectureTime">
+          <el-input size="small" v-model="editForm.lectureTime" auto-complete="off" placeholder="请输入yyyy-MM-dd HH:mm:ss"></el-input>
         </el-form-item>
-        <el-form-item label="招聘企业" prop="scale">
-          <el-input size="small" v-model="editForm.company" auto-complete="off" placeholder="请输入企业规模人数"></el-input>
+        <el-form-item label="招聘企业" prop="company">
+          <el-input size="small" v-model="editForm.company" auto-complete="off" placeholder="请输入招聘企业"></el-input>
         </el-form-item>
-        <el-form-item label="地点" prop="place">
+        <el-form-item label="宣讲地点" prop="place">
           <el-input size="small" v-model="editForm.place" auto-complete="off" placeholder="请输入地点"></el-input>
         </el-form-item>
-        <el-form-item label="联系老师" prop="industry">
+        <el-form-item label="联系老师" prop="teacher">
           <el-input size="small" v-model="editForm.teacher" auto-complete="off" placeholder="请输入企业所属行业"></el-input>
         </el-form-item>
         <el-form-item label="企业类型" prop="type">
@@ -144,6 +144,18 @@ export default {
         companyType:'',
         partner: '',
         token: localStorage.getItem('logintoken')
+      },
+      rules: {
+        lectureTheme: [
+          {required: true, message: '请输入宣讲主题', trigger: 'blur'}
+        ],
+        lectureTime: [
+          {required: true, message: '请输入宣讲时间', trigger: 'blur'}
+        ],
+        company: [
+          {required: true, message: '请输入招聘企业', trigger: 'blur'}
+        ],
+        place: [{required: true, message: '请输入宣讲地点', trigger: 'blur'}]
       },
       // 删除部门
       seletedata: {

@@ -8,7 +8,9 @@ export const menu = (params) => { return req("post", "/menu/getMenu", params) };
 // 退出接口
 export const loginout = (params) => { return req("post", "/user/loginout", params) };
 //获取验证码
-export const getcodeValue= (params) => { return axios.get("/user/getCode").then(res => res.data) };
+export const getcodeValue= () => { return axios.get("/user/captcha") };
+
+export const getcode= () => { return req("post", "/user/getCode") };
 
 
 
