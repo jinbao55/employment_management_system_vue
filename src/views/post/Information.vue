@@ -244,14 +244,11 @@ export default {
             .then(res => {
               this.editFormVisible = false
               this.loading = false
-              if (res.success) {
-                this.getdata(this.formInline)
+              if (res.code===500) {
                 this.$message({
-                  type: 'success',
-                  message: '保存成功！'
+                  type: 'error',
+                  message: res.msg
                 })
-                //保存成后刷新当前页
-                this.getdata(this.formInline)
               } else {
                 this.$message({
                   type: 'success',
@@ -281,12 +278,11 @@ export default {
         .then(() => {
           PostInformationDelete(row.id)
             .then(res => {
-              if (res.success) {
+              if (res.code===500) {
                 this.$message({
-                  type: 'success',
-                  message: '已删除!'
+                  type: 'error',
+                  message: res.msg
                 })
-                this.getdata(this.formInline)
               } else {
                 this.$message({
                   type: 'success',
