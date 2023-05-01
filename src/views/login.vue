@@ -39,7 +39,7 @@
 </template>
 <script type="text/ecmascript-6">
 import {getcodeValue, login} from '../api/userMG'
-
+import md5 from 'js-md5'
 export default {
   name: 'login',
   data() {
@@ -79,6 +79,7 @@ export default {
       this.$refs[formName].validate(valid => {
         this.logining = true
         if (valid) {
+          this.ruleForm.password = md5(this.ruleForm.password)
           login(this.ruleForm)
             .then(
               res => {
@@ -87,7 +88,7 @@ export default {
                   localStorage.setItem('userdata', JSON.stringify(res.data))
                   localStorage.setItem('token', JSON.stringify(res.msg))
                   this.$store.commit('login', 'true')
-                  this.$router.push({path: '/goods/Goods'})
+                  this.$router.push({path: '/charts/statistics'})
                 } else {
                   this.logining = false
                   this.$message.error(res.data)

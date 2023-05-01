@@ -147,6 +147,7 @@ import {
 } from '../../api/userUrl'
 import Pagination from '../../components/Pagination'
 import {userLock} from "../../api/userMG";
+import md5 from 'js-md5'
 
 export default {
   data() {
@@ -385,6 +386,7 @@ export default {
       this.$refs[editData].validate(valid => {
         if (valid) {
           // 请求方法
+          this.editForm.password = md5(this.editForm.password)
           userRegister(this.editForm)
             .then(res => {
               this.editFormVisible = false
@@ -476,7 +478,7 @@ export default {
         .then(() => {
           resetPassword(this.resetpsd)
             .then(res => {
-              if (res.success) {
+              if (res.code===200) {
                 this.$message({
                   type: 'success',
                   message: '重置为通用密码：123456'
